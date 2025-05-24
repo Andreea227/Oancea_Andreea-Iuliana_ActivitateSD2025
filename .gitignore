@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Oancea_Andreea-Iuliana_ActivitateSD2025/CopilotIndices/17.13.444.19527
+/.vs/Oancea_Andreea-Iuliana_ActivitateSD2025/FileContentIndex
+/.vs/Oancea_Andreea-Iuliana_ActivitateSD2025/v17
+/.vs
+/Activitate1/Activitate1.vcxproj.filters
+/Activitate1/Activitate1.vcxproj.user
