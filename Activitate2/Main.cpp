@@ -13,6 +13,13 @@ struct StructuraTelefon {
 };
 typedef struct StructuraTelefon Telefon;
 
+struct Heap {
+	int lungime;
+	Telefon* vector;
+	int nrTelefoane;
+};
+typedef struct Heap Heap;
+
 Telefon citireTelefonDinFisier(FILE* file) {
 	char buffer[100];
 	char sep[3] = ",\n";
@@ -33,13 +40,6 @@ Telefon citireTelefonDinFisier(FILE* file) {
 
 	return t1;
 }
-
-struct Heap {
-	int lungime;
-	Telefon* vector;
-	int nrTelefoane;
-};
-typedef struct Heap Heap;
 
 void afisareTelefon(Telefon tel) {
 	printf("ID: %d\n", tel.id);
