@@ -12,22 +12,6 @@ struct carte {
 
 typedef struct carte carte;
 
-carte citesteCarte(FILE* f) {
-	carte c;
-	char buffer[100];
-	fscanf(f, "%d", &c.id);
-	fscanf(f, "%s", buffer);
-	c.titlu = (char*)malloc(strlen(buffer) + 1);
-	strcpy(c.titlu, buffer);
-	fscanf(f, "%d", &c.nr_pagini);
-	fscanf(f, "%f", &c.pret);
-	return c;
-}
-
-void afisareCarte(carte c) {
-	printf("%d. %s - %d pagini - %.2f lei\n", c.id, c.titlu, c.nr_pagini, c.pret);
-}
-
 struct NOD {
 	carte info;
 	struct NOD* st;
@@ -36,11 +20,31 @@ struct NOD {
 
 typedef struct NOD NOD;
 
+carte citesteCarte(FILE* f) {
+	carte c;
+	char buffer[100];
+
+	fscanf(f, "%d", &c.id);
+	fscanf(f, "%s", buffer);
+	c.titlu = (char*)malloc(strlen(buffer) + 1);
+	strcpy(c.titlu, buffer);
+	fscanf(f, "%d", &c.nr_pagini);
+	fscanf(f, "%f", &c.pret);
+
+	return c;
+}
+
+void afisareCarte(carte c) {
+	printf("%d. %s - %d pagini - %.2f lei\n", c.id, c.titlu, c.nr_pagini, c.pret);
+}
+
 NOD* initNod(carte c, NOD* st, NOD* dr) {
 	NOD* nou = (NOD*)malloc(sizeof(NOD));
+	
 	nou->info = c;
 	nou->st = st;
 	nou->dr = dr;
+
 	return nou;
 }
 
@@ -113,13 +117,21 @@ void afisareDePeNivel(NOD* rad, int nivelCautat, int nivelCurent) {
 }
 
 void main() {
+	int nrCarti = 0;
 	NOD* rad = NULL;
 	FILE* f = fopen("carti.txt", "r");
-	int nrCarti = 0;
+	
 	fscanf(f, "%d", &nrCarti);
+	if (nrCarti <= 0) {
+		printf("Nu exista carti de citit.\n");
+		fclose(f);
+		return;
+	}
+
 	for (int i = 0; i < nrCarti; i++) {
 		rad = inserare(rad, citesteCarte(f));
 	}
+
 	fclose(f);
 
 	afisareArbore(rad);
