@@ -22,9 +22,11 @@ typedef struct Nod Nod;
 Carte citireCarteDinFisier(FILE* file) {
 	char buffer[100];
 	char sep[3] = ",\n";
-	fgets(buffer, 100, file);
 	char* aux;
 	Carte c;
+
+	fgets(buffer, 100, file);
+
 	aux = strtok(buffer, sep);
 	c.id = atoi(aux);
 	c.nrPagini = atoi(strtok(NULL, sep));
@@ -39,6 +41,7 @@ Carte citireCarteDinFisier(FILE* file) {
 	strcpy(c.autor, aux);
 
 	c.categorie = *strtok(NULL, sep);
+
 	return c;
 }
 
@@ -60,25 +63,32 @@ void afisareListaCarti(Nod* cap) {
 
 void adaugaCarteInLista(Nod** cap, Carte carteNoua) {
 	Nod* nou = (Nod*)malloc(sizeof(Nod));
-	nou->info = carteNoua;
-	nou->next = NULL;
-	if (*cap) {
-		Nod* p = *cap;
-		while (p->next) {
-			p = p->next;
+
+	if (nou != NULL) {
+		nou->info = carteNoua;
+		nou->next = NULL;
+
+		if (*cap) {
+			Nod* p = *cap;
+			while (p->next) {
+				p = p->next;
+			}
+			p->next = nou;
 		}
-		p->next = nou;
-	}
-	else {
-		*cap = nou;
+		else {
+			*cap = nou;
+		}
 	}
 }
 
 void adaugaLaInceputInLista(Nod** cap, Carte carteNoua) {
 	Nod* nou = (Nod*)malloc(sizeof(Nod));
-	nou->info = carteNoua;
-	nou->next = *cap;
-	*cap = nou;
+
+	if (nou != NULL) {
+		nou->info = carteNoua;
+		nou->next = *cap;
+		*cap = nou;
+	}
 }
 
 Nod* citireListaCartiDinFisier(const char* numeFisier) {
@@ -96,9 +106,11 @@ Nod* citireListaCartiDinFisier(const char* numeFisier) {
 void dezalocareListaCarti(Nod** cap) {
 	while (*cap) {
 		Nod* p = *cap;
+
 		*cap = p->next;
 		free(p->info.titlu);
 		free(p->info.autor);
+
 		free(p);
 	}
 }
@@ -106,22 +118,26 @@ void dezalocareListaCarti(Nod** cap) {
 float calculeazaPretMediu(Nod* cap) {
 	float suma = 0;
 	int contor = 0;
+
 	while (cap) {
 		suma += cap->info.pret;
 		contor++;
 		cap = cap->next;
 	}
+
 	return (contor > 0) ? suma / contor : 0;
 }
 
 float calculeazaPretCartiAutor(Nod* cap, const char* autorCautat) {
 	float suma = 0;
+
 	while (cap) {
 		if (strcmp(cap->info.autor, autorCautat) == 0) {
 			suma += cap->info.pret;
 		}
 		cap = cap->next;
 	}
+
 	return suma;
 }
 
@@ -136,6 +152,7 @@ void stergeCartiDupaCategorie(Nod** cap, char categorieCautata) {
 
 	if (*cap) {
 		Nod* p = *cap;
+
 		while (p && p->next) {
 			if (p->next->info.categorie == categorieCautata) {
 				Nod* aux = p->next;
@@ -167,5 +184,6 @@ int main() {
 	afisareListaCarti(cap);
 
 	dezalocareListaCarti(&cap);
+
 	return 0;
 }
