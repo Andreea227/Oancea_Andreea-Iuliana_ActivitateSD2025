@@ -18,16 +18,22 @@ struct Nod {
 };
 
 struct Pizzerie initializarePizzerie(const char* nume, int nrComenziZilnic, float pretMediuPizza) {
-	struct Pizzerie p;
-	p.nume = malloc(strlen(nume) + 1);
-	strcpy(p.nume, nume);
-	p.nrComenziZilnic = nrComenziZilnic;
-	p.pretMediuPizza = pretMediuPizza;
-	return p;
+	struct Pizzerie pizzerie;
+	pizzerie.nume = malloc(strlen(nume) + 1);
+
+	if (pizzerie.nume != NULL) {
+		strcpy(pizzerie.nume, nume);
+	}
+
+	pizzerie.nrComenziZilnic = nrComenziZilnic;
+	pizzerie.pretMediuPizza = pretMediuPizza;
+
+	return pizzerie;
 }
 
-void afisarePizzerie(struct Pizzerie p) {
-	printf("Pizzerie: %s | Comenzi/zi: %d | Pret mediu: %.2f\n", p.nume, p.nrComenziZilnic, p.pretMediuPizza);
+void afisarePizzerie(struct Pizzerie pizzerie) {
+	printf("Pizzerie: %s | Comenzi/zi: %d | Pret mediu: %.2f\n", 
+		pizzerie.nume, pizzerie.nrComenziZilnic, pizzerie.pretMediuPizza);
 }
 
 void afisareLista(Nod* cap) {
@@ -37,36 +43,42 @@ void afisareLista(Nod* cap) {
 	}
 }
 
-void pushBack(Nod** head, struct Pizzerie p) {
+void pushBack(Nod** head, struct Pizzerie pizzerie) {
 	Nod* nou = malloc(sizeof(Nod));
-	nou->pizzerie = p;
+
+	nou->pizzerie = pizzerie;
 	nou->next = NULL;
 	if (*head == NULL) {
 		*head = nou;
 	}
 	else {
 		Nod* temp = *head;
+
 		while (temp->next != NULL) {
 			temp = temp->next;
 		}
+
 		temp->next = nou;
 	}
 }
 
-Nod* pushFront(Nod* head, struct Pizzerie p) {
+Nod* pushFront(Nod* head, struct Pizzerie pizzerie) {
 	Nod* nou = malloc(sizeof(Nod));
-	nou->pizzerie = p;
+
+	nou->pizzerie = pizzerie;
 	nou->next = head;
+
 	return nou;
 }
 
 int main() {
-	struct Pizzerie p1 = initializarePizzerie("Pizza Napoli", 120, 25.5f);
-	struct Pizzerie p2 = initializarePizzerie("Pizza Roma", 95, 23.0f);
+	struct Pizzerie pizzerie1 = initializarePizzerie("Pizza Napoli", 120, 25.5f);
+	struct Pizzerie pizzerie2 = initializarePizzerie("Pizza Roma", 95, 23.0f);
 
 	Nod* lista = NULL;
-	lista = pushFront(lista, p1);
-	lista = pushFront(lista, p2);
+
+	lista = pushFront(lista, pizzerie1);
+	lista = pushFront(lista, pizzerie2);
 	pushBack(&lista, initializarePizzerie("Pizza Milano", 80, 27.3f));
 
 	afisareLista(lista);
