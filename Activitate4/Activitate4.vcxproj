@@ -127,7 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Main.c" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Orase.txt" />
