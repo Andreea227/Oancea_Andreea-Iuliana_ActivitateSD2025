@@ -17,3 +17,11 @@
 /Activitate3/x64/Debug
 *.filters
 *.user
+*.lastbuildstate
+*.tlog
+*.recipe
+*.ilk
+*.log
+*.obj
+*.idb
+*.pdb
