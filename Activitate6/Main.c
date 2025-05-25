@@ -34,11 +34,15 @@ Carte citireCarteDinFisier(FILE* file) {
 
 	aux = strtok(NULL, sep);
 	c.titlu = malloc(strlen(aux) + 1);
-	strcpy(c.titlu, aux);
+	if (c.titlu != NULL) {
+		strcpy(c.titlu, aux);
+	}
 
 	aux = strtok(NULL, sep);
 	c.autor = malloc(strlen(aux) + 1);
-	strcpy(c.autor, aux);
+	if (c.autor != NULL) {
+		strcpy(c.autor, aux);
+	}	
 
 	c.categorie = *strtok(NULL, sep);
 
@@ -100,6 +104,7 @@ Nod* citireListaCartiDinFisier(const char* numeFisier) {
 		}
 		fclose(f);
 	}
+
 	return cap;
 }
 
@@ -142,9 +147,10 @@ float calculeazaPretCartiAutor(Nod* cap, const char* autorCautat) {
 }
 
 void stergeCartiDupaCategorie(Nod** cap, char categorieCautata) {
-	while (*cap && (*cap)->info.categorie == categorieCautata) {
+	while (*cap != NULL && (*cap)->info.categorie == categorieCautata) {
 		Nod* aux = *cap;
 		*cap = aux->next;
+
 		free(aux->info.titlu);
 		free(aux->info.autor);
 		free(aux);
@@ -157,6 +163,7 @@ void stergeCartiDupaCategorie(Nod** cap, char categorieCautata) {
 			if (p->next->info.categorie == categorieCautata) {
 				Nod* aux = p->next;
 				p->next = aux->next;
+
 				free(aux->info.titlu);
 				free(aux->info.autor);
 				free(aux);
@@ -173,7 +180,8 @@ int main() {
 	afisareListaCarti(cap);
 
 	printf("Pretul mediu: %.2f\n", calculeazaPretMediu(cap));
-	printf("Pret total carti autor 'Popescu': %.2f\n", calculeazaPretCartiAutor(cap, "Popescu"));
+	float pretTotal = calculeazaPretCartiAutor(cap, "Popescu");
+	printf("Pret total carti autor 'Popescu': %.2f\n", pretTotal);
 
 	printf("\nStergere carti categorie A:\n");
 	stergeCartiDupaCategorie(&cap, 'A');
