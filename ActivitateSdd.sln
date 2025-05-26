@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Activitate10", "Activitate1
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Activitate11", "Activitate11\Activitate11.vcxproj", "{651C831B-B8C8-4E96-959C-2956D77A1F35}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Activitate12", "Activitate12\Activitate12.vcxproj", "{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{651C831B-B8C8-4E96-959C-2956D77A1F35}.Release|x64.Build.0 = Release|x64
 		{651C831B-B8C8-4E96-959C-2956D77A1F35}.Release|x86.ActiveCfg = Release|Win32
 		{651C831B-B8C8-4E96-959C-2956D77A1F35}.Release|x86.Build.0 = Release|Win32
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Debug|x64.ActiveCfg = Debug|x64
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Debug|x64.Build.0 = Debug|x64
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Debug|x86.ActiveCfg = Debug|Win32
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Debug|x86.Build.0 = Debug|Win32
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Release|x64.ActiveCfg = Release|x64
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Release|x64.Build.0 = Release|x64
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Release|x86.ActiveCfg = Release|Win32
+		{EEE99F9C-B6EF-45BA-8137-FF8BA40C9FC2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
