@@ -1,20 +1,125 @@
-// Activitate11.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-#include <iostream>
+struct Car {
+    char* model;
+    int topSpeed;
+};
 
-int main()
-{
-    std::cout << "Hello World!\n";
+struct Heap {
+    int dimensiune;
+    int numarElemente;
+    struct Car* vector;
+};
+
+struct Car initializareCar(const char* modelC, int topSpeedC) {
+    struct Car c;
+    c.model = malloc(sizeof(char) * (strlen(modelC) + 1));
+    strcpy(c.model, modelC);
+    c.topSpeed = topSpeedC;
+
+    return c;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+struct Heap initializareHeap(int dimensiune) {
+    struct Heap h;
+    h.dimensiune = dimensiune;
+    h.numarElemente = 0;
+    h.vector = malloc(sizeof(struct Car) * dimensiune);
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+    return h;
+}
+
+void afisareCar(struct Car c) {
+    printf("Model: %s | Viteza maxima: %d km/h\n", c.model, c.topSpeed);
+}
+
+void afisareHeap(struct Heap h) {
+    for (int i = 0; i < h.numarElemente; i++) {
+        afisareCar(h.vector[i]);
+    }
+}
+
+void filtrare(struct Heap h, int poz) {
+    int pozS = 2 * poz + 1;
+    int pozD = 2 * poz + 2;
+    int pozMax = poz;
+
+    if (pozS < h.numarElemente && h.vector[pozMax].topSpeed < h.vector[pozS].topSpeed) {
+        pozMax = pozS;
+    }
+
+    if (pozD < h.numarElemente && h.vector[pozMax].topSpeed < h.vector[pozD].topSpeed) {
+        pozMax = pozD;
+    }
+
+
+    if (pozMax != poz) {
+        struct Car aux = h.vector[pozMax];
+        h.vector[pozMax] = h.vector[poz];
+        h.vector[poz] = aux;
+
+        if (2 * pozMax + 1 < h.numarElemente) {
+            filtrare(h, pozMax);
+        }
+    }
+}
+
+
+struct Car extrageCarMaxSpeed(struct Heap* heap) {
+    struct Car aux = heap->vector[0];
+    heap->vector[0] = heap->vector[heap->numarElemente - 1];
+    heap->vector[heap->numarElemente - 1] = aux;
+    heap->numarElemente--;
+
+    for (int i = (heap->numarElemente - 1) / 2; i >= 0; i--) {
+        filtrare(*heap, i);
+    }
+
+    return aux;
+}
+
+void main() {
+    struct Heap h = initializareHeap(6);
+    h.numarElemente = 6;
+    h.vector[0] = initializareCar("Audi", 240);
+    h.vector[1] = initializareCar("BMW", 260);
+    h.vector[2] = initializareCar("Ford", 220);
+    h.vector[3] = initializareCar("Toyota", 210);
+    h.vector[4] = initializareCar("Honda", 230);
+    h.vector[5] = initializareCar("Mazda", 200);
+    
+    for (int i = (h.numarElemente - 2) / 2; i >= 0; i--) {
+        filtrare(h, i);
+    }
+
+    afisareHeap(h);
+    printf("\n");
+
+    struct Car c = extrageCarMaxSpeed(&h);
+
+    afisareHeap(h);
+
+    extrageCarMaxSpeed(&h);
+    extrageCarMaxSpeed(&h);
+    extrageCarMaxSpeed(&h);
+    extrageCarMaxSpeed(&h);
+    extrageCarMaxSpeed(&h);
+
+    printf("\nNr elemente: %d\n", h.numarElemente);
+
+    afisareHeap(h);
+
+    printf("\nVector sortat:\n");
+
+    for (int i = 0; i < h.dimensiune; i++) {
+        afisareCar(h.vector[i]);
+        free(h.vector[i].model);
+    }
+
+    free(h.vector);
+
+    return;
+}
